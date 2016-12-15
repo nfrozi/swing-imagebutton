@@ -2,11 +2,14 @@ package id.web.nfrozi.jimagebutton;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -15,21 +18,26 @@ import javax.swing.JFrame;
 public class App extends JFrame {
     
     private JButton clockButton;
+    private JLabel statusLabel;
+    private int counter = 0;
 
     public App() {
-        super("Image Button Example v1.0");
+        super("ImgBtnEx v1.0");
         init();
     }
     
     private void init() {
-        Dimension windowSize = new Dimension(320, 240);
+        // Init frame
+        Dimension windowSize = new Dimension(200, 200);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout(FlowLayout.CENTER));
+        setResizable(false);
         setSize(windowSize);
         setMinimumSize(windowSize);
         setLocationRelativeTo(null);  // position the frame to center
         
+        // Init buttons
         ImageIcon clockImage = new ImageIcon(
             getClass().getResource(
                 "/id/web/nfrozi/jimagebutton/resource/images/clock-128.png")
@@ -56,7 +64,18 @@ public class App extends JFrame {
             }
         });
         
+        clockButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                statusLabel.setText("Button clicked " + ++counter + " times.");
+            }
+        });
+        
+        // Init Status
+        statusLabel = new JLabel("Ready.");
+        
         add(clockButton);
+        add(statusLabel);
         setVisible(true);
     }
     
